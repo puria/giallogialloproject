@@ -1,22 +1,40 @@
+---
+import "@/styles/global.css";
+import '@fontsource-variable/sometype-mono';
+
+const { title } = Astro.props;
+
+const currentPath = Astro.url.pathname.slice(1);
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>
+      {title} Giallo Giallo Project
+    </title>
+  </head>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+  <body class="mx-auto flex max-w-6xl flex-col gap-4 p-1">
+    <a href="/" class="text-3xl whitespace-nowrap">Giallo Giallo Project</a>
+    <nav
+      class="mx-auto flex w-full flex-col-reverse justify-between gap-3 md:flex-row md:items-center md:gap-12"
+    >
+      <div class="flex flex-col gap-3 md:flex-row md:gap-12">
+        <a href="/">Projects</a>
+        <a href="/">Exit Through the Gift Shop</a>
+      </div>
+      <a href="/about" class:list={[{ 'underline decoration-main underline-offset-3 decoration-3 decoration-double': currentPath === "about" }]}>
+        About
+      </a>
+    </nav>
+    <main>
+      <slot />
+    </main>
+    <!--<Footer />-->
+  </body>
+</html>
