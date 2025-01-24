@@ -19,7 +19,7 @@ const currentPath = Astro.url.pathname.slice(1);
     </title>
   </head>
 
-  <body class="mx-auto flex max-w-6xl flex-col gap-4 p-1">
+  <body class="mx-auto flex max-w-6xl flex-col gap-8 p-10">
     <a href="/" class="text-3xl whitespace-nowrap">Giallo Giallo Project</a>
     <nav
       class="mx-auto flex w-full flex-col-reverse justify-between gap-3 md:flex-row md:items-center md:gap-12"
@@ -32,7 +32,7 @@ const currentPath = Astro.url.pathname.slice(1);
         About
       </a>
     </nav>
-    <main>
+    <main class="h-full pt-16">
       <slot />
     </main>
     <!--<Footer />-->

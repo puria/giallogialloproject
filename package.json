@@ -6,14 +6,22 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "db:export": "directus schema snapshot > schema.yaml",
+    "db:import": "directus schema apply schema.yaml",
+    "start": "concurrently \"astro dev\" \"directus start\""
   },
   "dependencies": {
+    "@directus/sdk": "^19.0.0",
     "@fontsource-variable/sometype-mono": "^5.1.1",
     "@fontsource/courier-prime": "^5.1.1",
     "@fontsource/pt-mono": "^5.1.1",
     "@tailwindcss/vite": "^4.0.0",
     "astro": "^5.1.9",
     "tailwindcss": "^4.0.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "directus": "^11.4.0"
   }
 }
