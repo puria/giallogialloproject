@@ -1,7 +1,8 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
-  --font-sans: "Sometype Mono Variable", monospace;
+  --font-sans: "Courier Prime", monospace;
   --color-main: var(--main);
 }
 
@@ -18,10 +19,6 @@
     height: 100%;
   }
   .active {
-    background-image: linear-gradient(
-      0deg,
-      --alpha(var(--main) / 70%) 0.8em,
-      transparent 0.3em
-    );
+    @apply underline decoration-main underline-offset-3 decoration-3 decoration-double;
   }
 }

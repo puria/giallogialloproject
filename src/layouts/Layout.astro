@@ -1,9 +1,16 @@
 ---
+import directus from "@/lib/directus";
 import "@/styles/global.css";
-import '@fontsource-variable/sometype-mono';
+import { readItems } from "@directus/sdk";
+import '@fontsource/courier-prime';
+
+const exhibitions = await directus.request(
+  readItems("exhibitions", { fields: [ "slug", ] })
+);
+
+console.log(exhibitions);
 
 const { title } = Astro.props;
-
 const currentPath = Astro.url.pathname.slice(1);
 ---
 
@@ -15,24 +22,33 @@ const currentPath = Astro.url.pathname.slice(1);
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>
-      {title} Giallo Giallo Project
+      {title} 🟨 Giallo Giallo Project
     </title>
   </head>
 
-  <body class="mx-auto flex max-w-6xl flex-col gap-8 p-10">
+  <body class="mx-auto flex max-w-3xl flex-col gap-8 p-10">
     <a href="/" class="text-3xl whitespace-nowrap">Giallo Giallo Project</a>
     <nav
       class="mx-auto flex w-full flex-col-reverse justify-between gap-3 md:flex-row md:items-center md:gap-12"
     >
       <div class="flex flex-col gap-3 md:flex-row md:gap-12">
-        <a href="/">Projects</a>
+        <a href="/projects" class:list={[{ 'active': currentPath.includes('project')  }]}>Projects</a>
         <a href="/">Exit Through the Gift Shop</a>
       </div>
-      <a href="/about" class:list={[{ 'underline decoration-main underline-offset-3 decoration-3 decoration-double': currentPath === "about" }]}>
+      <a href="/about" class:list={[{ 'active': currentPath === "about" }]}>
         About
       </a>
     </nav>
-    <main class="h-full pt-16">
+    <nav>
+      <ul class="flex gap-3">
+        {exhibitions.map((exhibition) => (
+          <li>
+            <a href={`/project/${exhibition.slug}`} class:list={[{ 'active': currentPath === 'project/' + exhibition.slug }]}>{exhibition.slug}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <main class="h-full">
       <slot />
     </main>
     <!--<Footer />-->

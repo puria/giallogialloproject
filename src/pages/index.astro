@@ -1,9 +1,9 @@
 ---
-// import { Button } from "@/components/ui/button";
+import directus from "@/lib/directus";
+import { readItems } from "@directus/sdk";
 
-import Layout from "@/layouts/Layout.astro";
+const exhibitions = await directus.request(
+  readItems("exhibitions", { fields: [ "slug", ] })
+);
+return Astro.rewrite("/project/" + exhibitions[0].slug)
 ---
-
-<Layout title="">
-  <!-- <Button><a href="/login">Login</a></Button> -->
-</Layout>

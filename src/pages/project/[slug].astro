@@ -1,0 +1,20 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import directus from "@/lib/directus";
+import { readItems } from "@directus/sdk";
+
+export async function getStaticPaths() {
+  const exhibitions = await directus.request(readItems("exhibitions", {
+    fields: ['*', { relation: ['*'] }],
+  }));
+  return exhibitions.map((e) => ({ params: { slug: e.slug }, props: e}));
+}
+const e = Astro.props;
+---
+
+<Layout title={e.title}>
+  <main>
+    <h1 class="text-center text-3xl pb-6">Project {e.slug}</h1>
+    <div class="mx-auto prose" set:html={e.content} />
+  </main>
+</Layout>

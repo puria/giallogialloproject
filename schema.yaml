@@ -7,7 +7,7 @@ collections:
       accountability: all
       archive_app_filter: true
       archive_field: null
-      archive_value: null
+      archive_value: archived
       collapse: open
       collection: artists
       color: null
@@ -19,10 +19,10 @@ collections:
       note: null
       preview_url: null
       singleton: false
-      sort: null
+      sort: 2
       sort_field: null
       translations: null
-      unarchive_value: null
+      unarchive_value: draft
       versioning: false
     schema:
       name: artists
@@ -43,13 +43,61 @@ collections:
       note: null
       preview_url: null
       singleton: false
-      sort: null
-      sort_field: null
+      sort: 1
+      sort_field: sort
       translations: null
       unarchive_value: draft
       versioning: false
     schema:
       name: exhibitions
+  - collection: exhibitions_artists
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: exhibitions_artists
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: import_export
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: 4
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: exhibitions_artists
+  - collection: global
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: global
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: true
+      sort: 3
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: global
 fields:
   - collection: artists
     field: id
@@ -91,90 +139,6 @@ fields:
       foreign_key_table: null
       foreign_key_column: null
   - collection: artists
-    field: date_created
-    type: timestamp
-    meta:
-      collection: artists
-      conditions: null
-      display: datetime
-      display_options:
-        relative: true
-      field: date_created
-      group: null
-      hidden: true
-      interface: datetime
-      note: null
-      options: null
-      readonly: true
-      required: false
-      sort: 2
-      special:
-        - date-created
-        - cast-timestamp
-      translations: null
-      validation: null
-      validation_message: null
-      width: half
-    schema:
-      name: date_created
-      table: artists
-      data_type: datetime
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: artists
-    field: date_updated
-    type: timestamp
-    meta:
-      collection: artists
-      conditions: null
-      display: datetime
-      display_options:
-        relative: true
-      field: date_updated
-      group: null
-      hidden: true
-      interface: datetime
-      note: null
-      options: null
-      readonly: true
-      required: false
-      sort: 3
-      special:
-        - date-updated
-        - cast-timestamp
-      translations: null
-      validation: null
-      validation_message: null
-      width: half
-    schema:
-      name: date_updated
-      table: artists
-      data_type: datetime
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: artists
     field: name
     type: string
     meta:
@@ -187,7 +151,9 @@ fields:
       hidden: false
       interface: input
       note: null
-      options: null
+      options:
+        iconLeft: brush
+        placeholder: null
       readonly: false
       required: true
       sort: 4
@@ -211,45 +177,45 @@ fields:
       is_generated: false
       generation_expression: null
       has_auto_increment: false
-      foreign_key_table: exhibitions
-      foreign_key_column: id
+      foreign_key_table: null
+      foreign_key_column: null
   - collection: exhibitions
-    field: id
-    type: integer
+    field: slug
+    type: string
     meta:
       collection: exhibitions
       conditions: null
       display: null
       display_options: null
-      field: id
+      field: slug
       group: null
-      hidden: true
+      hidden: false
       interface: input
       note: null
       options: null
-      readonly: true
-      required: false
-      sort: 1
+      readonly: false
+      required: true
+      sort: 2
       special: null
       translations: null
       validation: null
       validation_message: null
       width: full
     schema:
-      name: id
+      name: slug
       table: exhibitions
-      data_type: integer
+      data_type: varchar
       default_value: null
-      max_length: null
+      max_length: 255
       numeric_precision: null
       numeric_scale: null
       is_nullable: false
-      is_unique: false
+      is_unique: true
       is_indexed: false
       is_primary_key: true
       is_generated: false
       generation_expression: null
-      has_auto_increment: true
+      has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
   - collection: exhibitions
@@ -295,12 +261,12 @@ fields:
             value: archived
       readonly: false
       required: false
-      sort: 2
+      sort: 8
       special: null
       translations: null
       validation: null
       validation_message: null
-      width: full
+      width: half
     schema:
       name: status
       table: exhibitions
@@ -310,6 +276,45 @@ fields:
       numeric_precision: null
       numeric_scale: null
       is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exhibitions
+    field: sort
+    type: integer
+    meta:
+      collection: exhibitions
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 9
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: half
+    schema:
+      name: sort
+      table: exhibitions
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
       is_unique: false
       is_indexed: false
       is_primary_key: false
@@ -335,7 +340,7 @@ fields:
       options: null
       readonly: true
       required: false
-      sort: 3
+      sort: 10
       special:
         - date-created
         - cast-timestamp
@@ -377,7 +382,7 @@ fields:
       options: null
       readonly: true
       required: false
-      sort: 4
+      sort: 11
       special:
         - date-updated
         - cast-timestamp
@@ -391,6 +396,46 @@ fields:
       data_type: datetime
       default_value: null
       max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exhibitions
+    field: title
+    type: string
+    meta:
+      collection: exhibitions
+      conditions: null
+      display: null
+      display_options: null
+      field: title
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options:
+        iconLeft: subtitles
+      readonly: false
+      required: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: title
+      table: exhibitions
+      data_type: varchar
+      default_value: null
+      max_length: 255
       numeric_precision: null
       numeric_scale: null
       is_nullable: true
@@ -423,7 +468,7 @@ fields:
       translations: null
       validation: null
       validation_message: null
-      width: full
+      width: half
     schema:
       name: start_date
       table: exhibitions
@@ -462,7 +507,7 @@ fields:
       translations: null
       validation: null
       validation_message: null
-      width: full
+      width: half
     schema:
       name: end_date
       table: exhibitions
@@ -481,14 +526,37 @@ fields:
       foreign_key_table: null
       foreign_key_column: null
   - collection: exhibitions
-    field: address
+    field: artists
+    type: alias
+    meta:
+      collection: exhibitions
+      conditions: null
+      display: null
+      display_options: null
+      field: artists
+      group: null
+      hidden: false
+      interface: list-m2m
+      note: null
+      options: {}
+      readonly: false
+      required: false
+      sort: 4
+      special:
+        - m2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: exhibitions
+    field: location
     type: string
     meta:
       collection: exhibitions
       conditions: null
       display: null
       display_options: null
-      field: address
+      field: location
       group: null
       hidden: false
       interface: input
@@ -503,7 +571,7 @@ fields:
       validation_message: null
       width: full
     schema:
-      name: address
+      name: location
       table: exhibitions
       data_type: varchar
       default_value: null
@@ -520,94 +588,55 @@ fields:
       foreign_key_table: null
       foreign_key_column: null
   - collection: exhibitions
-    field: artist
-    type: alias
-    meta:
-      collection: exhibitions
-      conditions: null
-      display: null
-      display_options: null
-      field: artist
-      group: null
-      hidden: false
-      interface: list-o2m
-      note: null
-      options:
-        sort: null
-      readonly: false
-      required: true
-      sort: 8
-      special:
-        - o2m
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-  - collection: exhibitions
-    field: curator
-    type: integer
-    meta:
-      collection: exhibitions
-      conditions: null
-      display: null
-      display_options: null
-      field: curator
-      group: null
-      hidden: false
-      interface: select-dropdown-m2o
-      note: null
-      options: {}
-      readonly: false
-      required: true
-      sort: 9
-      special:
-        - m2o
-      translations: null
-      validation: null
-      validation_message: null
-      width: full
-    schema:
-      name: curator
-      table: exhibitions
-      data_type: integer
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: artists
-      foreign_key_column: id
-  - collection: exhibitions
-    field: description
+    field: content
     type: text
     meta:
       collection: exhibitions
       conditions: null
-      display: null
+      display: formatted-value
       display_options: null
-      field: description
+      field: content
       group: null
       hidden: false
       interface: input-rich-text-html
       note: null
       options:
-        font: monospace
+        toolbar:
+          - bold
+          - italic
+          - underline
+          - strikethrough
+          - subscript
+          - superscript
+          - h1
+          - h2
+          - h3
+          - h4
+          - alignleft
+          - aligncenter
+          - alignright
+          - alignjustify
+          - numlist
+          - bullist
+          - removeformat
+          - blockquote
+          - customLink
+          - customImage
+          - customMedia
+          - table
+          - hr
+          - code
+          - fullscreen
       readonly: false
       required: true
-      sort: 10
+      sort: 3
       special: null
       translations: null
       validation: null
       validation_message: null
       width: full
     schema:
-      name: description
+      name: content
       table: exhibitions
       data_type: text
       default_value: null
@@ -623,35 +652,281 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
-relations:
-  - collection: artists
-    field: name
-    related_collection: exhibitions
+  - collection: exhibitions_artists
+    field: id
+    type: integer
     meta:
-      junction_field: null
-      many_collection: artists
-      many_field: name
-      one_allowed_collections: null
-      one_collection: exhibitions
-      one_collection_field: null
-      one_deselect_action: nullify
-      one_field: artist
-      sort_field: null
+      collection: exhibitions_artists
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
     schema:
-      table: artists
-      column: name
+      name: id
+      table: exhibitions_artists
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exhibitions_artists
+    field: exhibitions_slug
+    type: string
+    meta:
+      collection: exhibitions_artists
+      conditions: null
+      display: null
+      display_options: null
+      field: exhibitions_slug
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: exhibitions_slug
+      table: exhibitions_artists
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
       foreign_key_table: exhibitions
+      foreign_key_column: slug
+  - collection: exhibitions_artists
+    field: artists_id
+    type: integer
+    meta:
+      collection: exhibitions_artists
+      conditions: null
+      display: null
+      display_options: null
+      field: artists_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: artists_id
+      table: exhibitions_artists
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: artists
       foreign_key_column: id
-      constraint_name: null
-      on_update: NO ACTION
-      on_delete: SET NULL
-  - collection: exhibitions
-    field: curator
+  - collection: global
+    field: id
+    type: integer
+    meta:
+      collection: global
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: input
+      note: null
+      options: null
+      readonly: true
+      required: false
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: global
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: global
+    field: title
+    type: string
+    meta:
+      collection: global
+      conditions: null
+      display: null
+      display_options: null
+      field: title
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: title
+      table: global
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: global
+    field: about
+    type: text
+    meta:
+      collection: global
+      conditions: null
+      display: formatted-value
+      display_options:
+        bold: true
+        font: serif
+        format: true
+        italic: true
+      field: about
+      group: null
+      hidden: false
+      interface: input-rich-text-html
+      note: null
+      options:
+        font: monospace
+        toolbar:
+          - bold
+          - italic
+          - underline
+          - strikethrough
+          - subscript
+          - superscript
+          - h1
+          - h2
+          - h3
+          - h4
+          - alignleft
+          - aligncenter
+          - alignright
+          - alignjustify
+          - alignnone
+          - indent
+          - outdent
+          - numlist
+          - bullist
+          - blockquote
+          - customLink
+          - customImage
+          - customMedia
+          - table
+          - hr
+          - code
+          - fullscreen
+      readonly: false
+      required: false
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: about
+      table: global
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+relations:
+  - collection: exhibitions_artists
+    field: artists_id
     related_collection: artists
     meta:
-      junction_field: null
-      many_collection: exhibitions
-      many_field: curator
+      junction_field: exhibitions_slug
+      many_collection: exhibitions_artists
+      many_field: artists_id
       one_allowed_collections: null
       one_collection: artists
       one_collection_field: null
@@ -659,10 +934,31 @@ relations:
       one_field: null
       sort_field: null
     schema:
-      table: exhibitions
-      column: curator
+      table: exhibitions_artists
+      column: artists_id
       foreign_key_table: artists
       foreign_key_column: id
+      constraint_name: null
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: exhibitions_artists
+    field: exhibitions_slug
+    related_collection: exhibitions
+    meta:
+      junction_field: artists_id
+      many_collection: exhibitions_artists
+      many_field: exhibitions_slug
+      one_allowed_collections: null
+      one_collection: exhibitions
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: artists
+      sort_field: null
+    schema:
+      table: exhibitions_artists
+      column: exhibitions_slug
+      foreign_key_table: exhibitions
+      foreign_key_column: slug
       constraint_name: null
       on_update: NO ACTION
       on_delete: SET NULL

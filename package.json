@@ -13,15 +13,17 @@
   },
   "dependencies": {
     "@directus/sdk": "^19.0.0",
-    "@fontsource-variable/sometype-mono": "^5.1.1",
     "@fontsource/courier-prime": "^5.1.1",
-    "@fontsource/pt-mono": "^5.1.1",
     "@tailwindcss/vite": "^4.0.0",
     "astro": "^5.1.9",
     "tailwindcss": "^4.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/typography": "^0.5.16",
     "concurrently": "^9.1.2",
-    "directus": "^11.4.0"
+    "directus": "^11.4.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-tailwind": "^2.2.12"
   }
 }

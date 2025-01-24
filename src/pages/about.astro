@@ -1,16 +1,12 @@
 ---
 import Layout from "@/layouts/Layout.astro";
+import directus from "@/lib/directus";
+import { readSingleton } from "@directus/sdk";
+
+const global = await directus.request(readSingleton("global"));
 ---
 
 <Layout title="About">
-  <div class="mx-auto text-justify max-w-[44ch] text-xl">
-
-  <p>Giallo Giallo Project is a platform specializing in contemporary art founded
-    by Domenico Positano.</p>
-  <p>The platform supports both new series of shows by
-    emerging artists and private collectors in discovering and collecting
-    international contemporary art through its extensive experience and vast
-    network in the art world.
-  </p>
-  </div>
+  <h1 class="text-center text-3xl pb-6">&nbsp;</h1>
+  <div class="mx-auto text-justify prose" set:html={global.about} />
 </Layout>
