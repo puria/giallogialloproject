@@ -1,15 +1,16 @@
 ---
 import directus from "@/lib/directus";
 import "@/styles/global.css";
-import { readItems } from "@directus/sdk";
+import { readItems, readSingleton } from "@directus/sdk";
 import '@fontsource/courier-prime';
 
 const exhibitions = await directus.request(
   readItems("exhibitions", { fields: [ "slug", ] })
 );
+const global = await directus.request(readSingleton("global"));
 
 const { title } = Astro.props;
-const currentPath = Astro.url.pathname.slice(1);
+const path = Astro.url.pathname.split("/");
 ---
 
 <!doctype html>
@@ -20,28 +21,28 @@ const currentPath = Astro.url.pathname.slice(1);
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>
-      {title} 🟨 Giallo Giallo Project
+      {title} 🟨 {global.title}
     </title>
   </head>
 
   <body class="mx-auto flex max-w-3xl flex-col gap-8 p-10">
-    <a href="/" class="text-3xl whitespace-nowrap">Giallo Giallo Project</a>
+    <a href="/" class="text-3xl whitespace-nowrap">{global.title}</a>
     <nav
       class="mx-auto flex w-full flex-col-reverse justify-between gap-3 md:flex-row md:items-center md:gap-12"
     >
       <div class="flex flex-col gap-3 md:flex-row md:gap-12">
-        <a href="/projects" class:list={[{ 'active': currentPath.includes('project')  }]}>Projects</a>
+        <a href="/projects" class:list={[{ 'active': path.includes('project')  }]}>Projects</a>
         <a href="/">Exit Through the Gift Shop</a>
       </div>
-      <a href="/about" class:list={[{ 'active': currentPath === "about" }]}>
+      <a href="/about" class:list={[{ 'active': path.includes('about') }]}>
         About
       </a>
     </nav>
-    <nav>
+    <nav class:list={[{ 'hidden': !path.includes('project') }]}>
       <ul class="flex gap-3">
         {exhibitions.map((exhibition) => (
           <li>
-            <a href={`/project/${exhibition.slug}`} class:list={[{ 'active': currentPath === 'project/' + exhibition.slug }]}>{exhibition.slug}</a>
+            <a href={`/project/${exhibition.slug}`} class:list={[{ 'active': path.includes(exhibition.slug) }]}>{exhibition.slug}</a>
           </li>
         ))}
       </ul>
