@@ -8,8 +8,6 @@ const exhibitions = await directus.request(
   readItems("exhibitions", { fields: [ "slug", ] })
 );
 
-console.log(exhibitions);
-
 const { title } = Astro.props;
 const currentPath = Astro.url.pathname.slice(1);
 ---
