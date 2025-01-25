@@ -3,13 +3,14 @@ import directus from "@/lib/directus";
 import "@/styles/global.css";
 import { readItems, readSingleton } from "@directus/sdk";
 import '@fontsource/courier-prime';
+import { SEO } from "astro-seo";
 
 const exhibitions = await directus.request(
   readItems("exhibitions", { fields: [ "slug", ] })
 );
 const global = await directus.request(readSingleton("global"));
 
-const { title } = Astro.props;
+const { title, description = '', social_cover = '' } = Astro.props;
 const path = Astro.url.pathname.split("/");
 ---
 
@@ -18,11 +19,26 @@ const path = Astro.url.pathname.split("/");
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="generator" content={Astro.generator} />
-    <title>
-      {title} 🟨 {global.title}
-    </title>
+    <SEO 
+      title=`${title} 🟨 ${global.title}`
+      description={description}      
+      openGraph={{
+        basic: {
+          title: `${title} 🟨 ${global.title}`,
+          type: "website",
+          image: `${import.meta.env.DIRECTUS_URL}/assets/${social_cover}?width=500`
+        },
+        optional: {
+          description
+        },
+      }}
+
+      charset="UTF-8"
+      extend={{
+        link: [{ rel: "icon", href: "/favicon.ico" }],
+      }}
+    />
+    <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
 
   <body class="mx-auto flex max-w-3xl flex-col gap-8 p-10">
@@ -50,6 +66,5 @@ const path = Astro.url.pathname.split("/");
     <main class="h-full">
       <slot />
     </main>
-    <!--<Footer />-->
   </body>
 </html>
