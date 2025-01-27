@@ -17,7 +17,6 @@ const path = Astro.url.pathname.split("/");
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <SEO 
       title=`${title} 🟨 ${global.title}`
@@ -32,7 +31,6 @@ const path = Astro.url.pathname.split("/");
           description
         },
       }}
-
       charset="UTF-8"
       extend={{
         link: [{ rel: "icon", href: "/favicon.ico" }],
