@@ -7,6 +7,5 @@ const global = await directus.request(readSingleton("global"));
 ---
 
 <Layout title="About">
-  <h1 class="text-center text-3xl pb-6">&nbsp;</h1>
-  <div class="mx-auto text-justify prose" set:html={global.about} />
+  <div class="mx-auto text-justify prose pt-16" set:html={global.about} />
 </Layout>

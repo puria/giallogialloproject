@@ -19,6 +19,6 @@
     height: 100%;
   }
   .active {
-    @apply underline decoration-main underline-offset-3 decoration-3 decoration-double;
+    @apply underline decoration-main underline-offset-4 decoration-2 decoration-double;
   }
 }

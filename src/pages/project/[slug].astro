@@ -18,8 +18,12 @@ const e = Astro.props;
     <h1 class="text-center text-3xl pb-6">Project {e.slug}</h1>
     <div class="mx-auto prose" set:html={e.content} />
     <div class="grid grid-col-1 gap-4 p-8">
-      { e.gallery && e.gallery.map((i, x) => 
-        <Image src={`${process.env.DIRECTUS_URL}/assets/${i.directus_files_id}?key=ex`} alt={`Artwork #${x+1} of ${e.title}`} inferSize={true} class="border border-main"/>
+      { e.gallery && e.gallery.map((i: {directus_files_id: string}, x: number) =>
+        <Image 
+          src={`${import.meta.env.DIRECTUS_URL}/assets/${i.directus_files_id}?width=688`} 
+          alt={`Artwork #${x+1} of ${e.title}`} 
+          class="border border-main"
+          inferSize />
       )}
     </div>
   </main>
