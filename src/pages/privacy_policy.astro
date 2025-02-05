@@ -1,0 +1,11 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import directus from "@/lib/directus";
+import { readSingleton } from "@directus/sdk";
+
+const global = await directus.request(readSingleton("global"));
+---
+
+<Layout title="Privacy Policy">
+  <div class="mx-auto text-justify prose pt-16" set:html={global.privacy_policy} />
+</Layout>

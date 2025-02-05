@@ -39,7 +39,7 @@ const path = Astro.url.pathname.split("/");
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
 
-  <body class="mx-auto flex max-w-3xl flex-col gap-8 p-10">
+  <body class="mx-auto flex max-w-3xl flex-col gap-8 p-10  min-h-screen">
     <a href="/" class="text-3xl whitespace-nowrap">{global.title}</a>
     <nav
       class="mx-auto flex w-full flex-col-reverse justify-between gap-3 md:flex-row md:items-center md:gap-12"
@@ -63,8 +63,19 @@ const path = Astro.url.pathname.split("/");
         ))}
       </ul>
     </nav>
-    <main class="h-full">
+    <main class="flex-grow">
       <slot />
     </main>
+    <footer class="relative p-7 pb-40">
+      <div class="footer-buttons flex gap-4">
+        <a href={global.Footer_CTA_URL_1} aria-label={global.Footer_CTA_TEXT_1} target="_blank" class="border border-main p-2">
+          {global.Footer_CTA_TEXT_1} 
+        </a>
+        <a id="" href={global.Footer_CTA_URL_2} aria-label={global.Footer_CTA_TEXT_2} class="border-main border p-2">
+          {global.Footer_CTA_TEXT_2}
+        </a>
+      </div>
+      <p class="mt-8">&copy; 2018-2025 Giallo Giallo Project. All rights reserved.</p>
+    </footer>
   </body>
 </html>
