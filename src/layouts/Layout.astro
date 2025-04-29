@@ -2,15 +2,15 @@
 import directus from "@/lib/directus";
 import "@/styles/global.css";
 import { readItems, readSingleton } from "@directus/sdk";
-import '@fontsource/courier-prime';
+import "@fontsource/courier-prime";
 import { SEO } from "astro-seo";
 
 const exhibitions = await directus.request(
-  readItems("exhibitions", { fields: [ "slug", ] })
+  readItems("exhibitions", { fields: ["slug"] }),
 );
 const global = await directus.request(readSingleton("global"));
 
-const { title, description = '', social_cover = '' } = Astro.props;
+const { title, description = "", social_cover = "" } = Astro.props;
 const path = Astro.url.pathname.split("/");
 ---
 
@@ -18,17 +18,17 @@ const path = Astro.url.pathname.split("/");
 <html lang="en">
   <head>
     <meta name="viewport" content="width=device-width" />
-    <SEO 
+    <SEO
       title=`${title} 🟨 ${global.title}`
-      description={description}      
+      description={description}
       openGraph={{
         basic: {
           title: `${title} 🟨 ${global.title}`,
           type: "website",
-          image: `${import.meta.env.DIRECTUS_URL}/assets/${social_cover}?width=500`
+          image: `${import.meta.env.DIRECTUS_URL}/assets/${social_cover}?width=500`,
         },
         optional: {
-          description
+          description,
         },
       }}
       charset="UTF-8"
@@ -39,43 +39,233 @@ const path = Astro.url.pathname.split("/");
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
 
-  <body class="mx-auto flex max-w-3xl flex-col gap-8 p-10  min-h-screen">
+  <body class="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 p-10">
     <a href="/" class="text-3xl whitespace-nowrap">{global.title}</a>
     <nav
       class="mx-auto flex w-full flex-col-reverse justify-between gap-3 md:flex-row md:items-center md:gap-12"
     >
       <div class="flex flex-col-reverse gap-3 md:flex-row md:gap-12">
-        <a href="/projects" class:list={[{'active': path.includes('project')}]}>Projects</a>
-        <a href="/exit" class:list={[{'active': path.includes('exit')}]}>
+        <a href="/projects" class:list={[{ active: path.includes("project") }]}
+          >Projects</a
+        >
+        <a href="/exit" class:list={[{ active: path.includes("exit") }]}>
           Exit Through the Gift Shop
         </a>
       </div>
-      <a href="/about" class:list={[{'active': path.includes('about')}]}>
+      <a href="/about" class:list={[{ active: path.includes("about") }]}>
         About
       </a>
     </nav>
-    <nav class:list={[{ 'hidden': !path.includes('project') }]}>
+    <nav class:list={[{ hidden: !path.includes("project") }]}>
       <ul class="flex gap-3">
-        {exhibitions.map((exhibition) => (
-          <li>
-            <a href={`/project/${exhibition.slug}`} class:list={[{ 'active': path.includes(exhibition.slug) }]}>{exhibition.slug}</a>
-          </li>
-        ))}
+        {
+          exhibitions.map((exhibition) => (
+            <li>
+              <a
+                href={`/project/${exhibition.slug}`}
+                class:list={[{ active: path.includes(exhibition.slug) }]}
+              >
+                {exhibition.slug}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </nav>
     <main class="flex-grow">
       <slot />
     </main>
+    <div
+      class:list={["relative z-10", { hidden: true }]}
+      aria-labelledby="modal-title"
+      role="dialog"
+      aria-modal="true"
+      id="nl"
+    >
+      <!--
+        Background backdrop, show/hide based on modal state.
+
+        Entering: "ease-out duration-300"
+        From: "opacity-0"
+        To: "opacity-100"
+        Leaving: "ease-in duration-200"
+        From: "opacity-100"
+        To: "opacity-0"
+      -->
+      <div
+        class="fixed inset-0 bg-gray-500/75 transition-opacity"
+        aria-hidden="true"
+      >
+      </div>
+
+      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div
+          class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
+        >
+          <!--
+            Modal panel, show/hide based on modal state.
+
+            Entering: "ease-out duration-300"
+            From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            To: "opacity-100 translate-y-0 sm:scale-100"
+            Leaving: "ease-in duration-200"
+            From: "opacity-100 translate-y-0 sm:scale-100"
+            To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+          -->
+          <div
+            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+          >
+            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+              <div class="sm:flex sm:items-start">
+                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                  <h3
+                    class="text-base font-semibold text-gray-900"
+                    id="modal-title"
+                  >
+                    Newsletter
+                  </h3>
+                  <div class="mt-2">
+                    <p class="text-sm text-gray-600">
+                      Subscribe to receive updates on upcoming events and news.
+                      No spam, just art.
+                      <a
+                        href="/privacy_policy"
+                        target="_blank"
+                        class="text-main underline">Privacy Policy</a
+                      >
+                    </p>
+                    <form>
+                      <div class="space-y-12">
+                        <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-8">
+                          <!-- First Name Field -->
+                          <div class="mt-2">
+                            <label
+                              for="name"
+                              class="block text-sm font-medium text-gray-900"
+                            >
+                              Name
+                            </label>
+                            <input
+                              type="text"
+                              name="name"
+                              id="name"
+                              autocomplete="given-name"
+                              class="focus:outline-main block w-full bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 sm:text-sm"
+                            />
+                          </div>
+
+                          <!-- Email Field -->
+                          <div class="mt-2">
+                            <label
+                              for="email"
+                              class="block text-sm font-medium text-gray-900"
+                            >
+                              Email Address
+                            </label>
+                            <input
+                              id="email"
+                              name="email"
+                              type="email"
+                              autocomplete="email"
+                              required
+                              class="focus:outline-main block w-full px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 sm:text-sm"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <p class="hidden bg-gray-50 px-4 py-3" id="subscribed">
+                        🥳 Hooray we will keep you updated!
+                      </p>
+                      <div
+                        id="actions"
+                        class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6"
+                      >
+                        <button
+                          id="submit"
+                          type="submit"
+                          class="bg-main inline-flex w-full cursor-pointer justify-center px-3 py-2 text-sm font-semibold text-white shadow-xs hover:text-black sm:ml-3 sm:w-auto"
+                        >
+                          Subscribe
+                        </button>
+                        <button
+                          id="cancel"
+                          type="button"
+                          class="mt-3 inline-flex w-full justify-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 hover:ring-red-500 sm:mt-0 sm:w-auto"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <footer class="relative p-7 pb-40">
       <div class="footer-buttons flex gap-4">
-        <a href={global.Footer_CTA_URL_1} aria-label={global.Footer_CTA_TEXT_1} target="_blank" class="border border-main p-2">
-          {global.Footer_CTA_TEXT_1} 
+        <a
+          href={global.Footer_CTA_URL_1}
+          aria-label={global.Footer_CTA_TEXT_1}
+          target="_blank"
+          class="border-main border p-2"
+        >
+          {global.Footer_CTA_TEXT_1}
         </a>
-        <a id="" href={global.Footer_CTA_URL_2} aria-label={global.Footer_CTA_TEXT_2} class="border-main border p-2">
+        <a
+          id="fomo"
+          href={global.Footer_CTA_URL_2}
+          aria-label={global.Footer_CTA_TEXT_2}
+          class="border-main border p-2"
+        >
           {global.Footer_CTA_TEXT_2}
         </a>
       </div>
-      <p class="mt-8">&copy; 2018-2025 Giallo Giallo Project. All rights reserved.</p>
+
+      <p class="mt-8">
+        &copy; 2018-2025 Giallo Giallo Project. All rights reserved.
+      </p>
     </footer>
   </body>
 </html>
+
+<script>
+  const cancel = document.getElementById("cancel");
+  cancel?.addEventListener("click", (e) => {
+    document.getElementById("nl")?.classList.toggle("hidden");
+    e.preventDefault();
+  });
+
+  const fomo = document.getElementById("fomo");
+  fomo?.addEventListener("click", (e) => {
+    document.getElementById("nl")?.classList.toggle("hidden");
+    e.preventDefault();
+  });
+
+  import { createItem, createDirectus, rest } from "@directus/sdk";
+  const directus = createDirectus(
+    "https://admin.giallogialloproject.com/",
+  ).with(rest({ credentials: "include" }));
+  const form = document.querySelector("form");
+  form?.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const formData = new FormData(form);
+    console.error(formData.get("email"));
+    try {
+      await directus.request(
+        createItem("contacts", {
+          name: formData.get("name"),
+          email: formData.get("email"),
+        }),
+      );
+      document.getElementById("actions")?.classList.add("!hidden");
+      document.getElementById("subscribed")?.classList.toggle("hidden");
+    } catch (error) {
+      document.getElementById("errors")?.classList.toggle("hidden");
+      console.error(error);
+    }
+  });
+</script>
