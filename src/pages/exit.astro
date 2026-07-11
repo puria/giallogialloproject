@@ -1,29 +1,29 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import directus from "@/lib/directus";
-import { Image } from "astro:assets";
+import directus, { directusUrl } from "@/lib/directus";
 import { readItems } from "@directus/sdk";
 
-const ex = await directus.request(
-  readItems("exit_images", { fields: [ "*" ] })
-);
-
+const ex = await directus.request(readItems("exit_images", { fields: ["*"] }));
 ---
 
 <Layout title="Exit Through the Gift Shop">
-  <div class="grid grid-col-1 gap-8 pt-12 p-20">
-    { ex.map((e, x) => 
+  <div class="grid-col-1 grid gap-8 p-20 pt-12">
+    {
+      ex.map((e, x) => (
         <div class="flex flex-col gap-4">
-          <Image 
-            src={`${import.meta.env.DIRECTUS_URL}/assets/${e.image}?key=ex`} 
-            alt={`Exit #${x+1}`} 
-            class="border border-main"
-            inferSize />
-          <div class="text-justify prose pt-4" set:html={e.description} />
+          <img
+            src={`${directusUrl}/assets/${e.image}?key=ex`}
+            alt={`Exit #${x + 1}`}
+            class="border-main border"
+            loading="lazy"
+            decoding="async"
+          />
+          <div class="prose pt-4 text-justify" set:html={e.description} />
         </div>
-    )}
+      ))
+    }
 
-      <!--, x: number) =>-->
-      <!--)}-->
+    <!--, x: number) =>-->
+    <!--)}-->
   </div>
 </Layout>

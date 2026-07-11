@@ -1,5 +1,5 @@
 ---
-import directus from "@/lib/directus";
+import directus, { directusUrl } from "@/lib/directus";
 import "@/styles/global.css";
 import { readItems, readSingleton } from "@directus/sdk";
 import "@fontsource/courier-prime";
@@ -25,7 +25,7 @@ const path = Astro.url.pathname.split("/");
         basic: {
           title: `${title} 🟨 ${global.title}`,
           type: "website",
-          image: `${import.meta.env.DIRECTUS_URL}/assets/${social_cover}?width=500`,
+          image: `${directusUrl}/assets/${social_cover}?width=500`,
         },
         optional: {
           description,
@@ -134,7 +134,7 @@ const path = Astro.url.pathname.split("/");
                         class="text-main underline">Privacy Policy</a
                       >
                     </p>
-                    <form>
+                    <form id="newsletter-form" data-directus-url={directusUrl}>
                       <div class="space-y-12">
                         <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-8">
                           <!-- First Name Field -->
@@ -175,6 +175,9 @@ const path = Astro.url.pathname.split("/");
                       </div>
                       <p class="hidden bg-gray-50 px-4 py-3" id="subscribed">
                         🥳 Hooray we will keep you updated!
+                      </p>
+                      <p class="hidden bg-red-50 px-4 py-3 text-sm" id="errors">
+                        Subscription failed. Please try again.
                       </p>
                       <div
                         id="actions"
@@ -246,14 +249,19 @@ const path = Astro.url.pathname.split("/");
   });
 
   import { createItem, createDirectus, rest } from "@directus/sdk";
-  const directus = createDirectus(
-    "https://admin.giallogialloproject.com/",
-  ).with(rest({ credentials: "include" }));
-  const form = document.querySelector("form");
+  const form = document.querySelector("#newsletter-form");
+  const directusUrl = form?.dataset.directusUrl;
+  const directus = directusUrl
+    ? createDirectus(directusUrl).with(rest())
+    : null;
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
+    if (!directus) return;
     const formData = new FormData(form);
-    console.error(formData.get("email"));
+    const actions = document.getElementById("actions");
+    const subscribed = document.getElementById("subscribed");
+    const errors = document.getElementById("errors");
+    errors?.classList.add("hidden");
     try {
       await directus.request(
         createItem("contacts", {
@@ -261,11 +269,14 @@ const path = Astro.url.pathname.split("/");
           email: formData.get("email"),
         }),
       );
-      document.getElementById("actions")?.classList.add("!hidden");
-      document.getElementById("subscribed")?.classList.toggle("hidden");
+      actions?.classList.add("!hidden");
+      subscribed?.classList.remove("hidden");
     } catch (error) {
-      document.getElementById("errors")?.classList.toggle("hidden");
-      console.error(error);
+      errors?.classList.remove("hidden");
+      console.error("Newsletter subscription failed", {
+        directusUrl,
+        error,
+      });
     }
   });
 </script>
