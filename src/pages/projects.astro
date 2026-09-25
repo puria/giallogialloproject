@@ -1,9 +1,32 @@
 ---
+import Layout from "@/layouts/Layout.astro";
 import directus from "@/lib/directus";
+import { type Exhibition, formatVenueYear } from "@/lib/exhibitions";
 import { readItems } from "@directus/sdk";
 
-const exhibitions = await directus.request(
-  readItems("exhibitions", { fields: [ "slug", ] })
-);
-return Astro.rewrite("/project/" + exhibitions[0].slug)
+const exhibitions = (await directus.request(
+  readItems("exhibitions", {
+    fields: ["slug", "title", "venue", "year"],
+    sort: ["-slug"],
+    limit: -1,
+  }),
+)) as Exhibition[];
 ---
+
+<Layout title="Projects" label="Projects">
+  <ul class="mt-4 border-t border-current">
+    {
+      exhibitions.map((e) => (
+        <li class="border-b border-gray-300 py-3">
+          <a href={`/project/${e.slug}`} class="group block">
+            <span class="font-bold">{e.slug} /</span>
+            <span class="border-main group-hover:text-main border-b-[3px] italic">
+              {e.title.trim()}
+            </span>
+          </a>
+          <p class="mt-1 text-[13px] text-gray-600">{formatVenueYear(e)}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

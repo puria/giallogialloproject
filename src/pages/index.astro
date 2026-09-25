@@ -1,9 +1,14 @@
 ---
+import Layout from "@/layouts/Layout.astro";
 import directus from "@/lib/directus";
-import { readItems } from "@directus/sdk";
+import { readSingleton } from "@directus/sdk";
 
-const exhibitions = await directus.request(
-  readItems("exhibitions", { fields: [ "slug", ] })
-);
-return Astro.rewrite("/project/" + exhibitions[0].slug)
+const global = await directus.request(readSingleton("global"));
 ---
+
+<Layout title="About" label="About">
+  <div
+    class="prose-ggp prose-p:my-6 mt-4 text-lg leading-[1.55]"
+    set:html={global.about}
+  />
+</Layout>

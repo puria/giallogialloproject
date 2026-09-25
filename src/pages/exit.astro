@@ -6,24 +6,20 @@ import { readItems } from "@directus/sdk";
 const ex = await directus.request(readItems("exit_images", { fields: ["*"] }));
 ---
 
-<Layout title="Exit Through the Gift Shop">
-  <div class="grid-col-1 grid gap-8 p-20 pt-12">
+<Layout title="Exit Through the Gift Shop" label="Exit Through the Gift Shop">
+  <div class="mt-4 grid grid-cols-1 gap-12 border-t border-current pt-8">
     {
       ex.map((e, x) => (
         <div class="flex flex-col gap-4">
           <img
             src={`${directusUrl}/assets/${e.image}?key=ex`}
             alt={`Exit #${x + 1}`}
-            class="border-main border"
             loading="lazy"
             decoding="async"
           />
-          <div class="prose pt-4 text-justify" set:html={e.description} />
+          <div class="prose-ggp" set:html={e.description} />
         </div>
       ))
     }
-
-    <!--, x: number) =>-->
-    <!--)}-->
   </div>
 </Layout>

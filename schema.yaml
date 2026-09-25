@@ -1,5 +1,5 @@
 version: 1
-directus: 11.4.0
+directus: 11.17.4
 vendor: sqlite
 collections:
   - collection: artists
@@ -7,7 +7,7 @@ collections:
       accountability: all
       archive_app_filter: true
       archive_field: null
-      archive_value: archived
+      archive_value: null
       collapse: open
       collection: artists
       color: null
@@ -19,19 +19,43 @@ collections:
       note: null
       preview_url: null
       singleton: false
-      sort: 2
+      sort: null
       sort_field: null
       translations: null
-      unarchive_value: draft
+      unarchive_value: null
       versioning: false
     schema:
       name: artists
+  - collection: contacts
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: contacts
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: contacts
   - collection: exhibitions
     meta:
       accountability: all
       archive_app_filter: true
       archive_field: status
-      archive_value: archived
+      archive_value: null
       collapse: open
       collection: exhibitions
       color: null
@@ -43,10 +67,10 @@ collections:
       note: null
       preview_url: null
       singleton: false
-      sort: 1
+      sort: null
       sort_field: sort
       translations: null
-      unarchive_value: draft
+      unarchive_value: null
       versioning: false
     schema:
       name: exhibitions
@@ -62,18 +86,66 @@ collections:
       display_template: null
       group: null
       hidden: true
-      icon: import_export
+      icon: null
       item_duplication_fields: null
       note: null
       preview_url: null
       singleton: false
-      sort: 4
+      sort: null
       sort_field: null
       translations: null
       unarchive_value: null
       versioning: false
     schema:
       name: exhibitions_artists
+  - collection: exhibitions_files
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: exhibitions_files
+      color: null
+      display_template: null
+      group: null
+      hidden: true
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: exhibitions_files
+  - collection: exit_images
+    meta:
+      accountability: all
+      archive_app_filter: true
+      archive_field: null
+      archive_value: null
+      collapse: open
+      collection: exit_images
+      color: null
+      display_template: null
+      group: null
+      hidden: false
+      icon: null
+      item_duplication_fields: null
+      note: null
+      preview_url: null
+      singleton: false
+      sort: null
+      sort_field: null
+      translations: null
+      unarchive_value: null
+      versioning: false
+    schema:
+      name: exit_images
   - collection: global
     meta:
       accountability: all
@@ -91,7 +163,7 @@ collections:
       note: null
       preview_url: null
       singleton: true
-      sort: 3
+      sort: null
       sort_field: null
       translations: null
       unarchive_value: null
@@ -110,11 +182,12 @@ fields:
       field: id
       group: null
       hidden: true
-      interface: input
+      interface: numeric
       note: null
       options: null
       readonly: true
       required: false
+      searchable: true
       sort: 1
       special: null
       translations: null
@@ -151,12 +224,11 @@ fields:
       hidden: false
       interface: input
       note: null
-      options:
-        iconLeft: brush
-        placeholder: null
+      options: null
       readonly: false
       required: true
-      sort: 4
+      searchable: true
+      sort: 2
       special: null
       translations: null
       validation: null
@@ -170,6 +242,86 @@ fields:
       max_length: 255
       numeric_precision: null
       numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: contacts
+    field: id
+    type: integer
+    meta:
+      collection: contacts
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: numeric
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: contacts
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: contacts
+    field: name
+    type: string
+    meta:
+      collection: contacts
+      conditions: null
+      display: null
+      display_options: null
+      field: name
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: name
+      table: contacts
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
       is_nullable: true
       is_unique: false
       is_indexed: false
@@ -177,6 +329,86 @@ fields:
       is_generated: false
       generation_expression: null
       has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: contacts
+    field: email
+    type: string
+    meta:
+      collection: contacts
+      conditions: null
+      display: null
+      display_options: null
+      field: email
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: true
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: email
+      table: contacts
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exhibitions
+    field: id
+    type: integer
+    meta:
+      collection: exhibitions
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: numeric
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: exhibitions
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
       foreign_key_table: null
       foreign_key_column: null
   - collection: exhibitions
@@ -195,6 +427,7 @@ fields:
       options: null
       readonly: false
       required: true
+      searchable: true
       sort: 2
       special: null
       translations: null
@@ -212,67 +445,81 @@ fields:
       is_nullable: false
       is_unique: true
       is_indexed: false
-      is_primary_key: true
+      is_primary_key: false
       is_generated: false
       generation_expression: null
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
   - collection: exhibitions
-    field: status
+    field: title
     type: string
     meta:
       collection: exhibitions
       conditions: null
-      display: labels
-      display_options:
-        choices:
-          - background: var(--theme--primary-background)
-            color: var(--theme--primary)
-            foreground: var(--theme--primary)
-            text: $t:published
-            value: published
-          - background: var(--theme--background-normal)
-            color: var(--theme--foreground)
-            foreground: var(--theme--foreground)
-            text: $t:draft
-            value: draft
-          - background: var(--theme--warning-background)
-            color: var(--theme--warning)
-            foreground: var(--theme--warning)
-            text: $t:archived
-            value: archived
-        showAsDot: true
-      field: status
+      display: null
+      display_options: null
+      field: title
       group: null
       hidden: false
-      interface: select-dropdown
+      interface: input
       note: null
-      options:
-        choices:
-          - color: var(--theme--primary)
-            text: $t:published
-            value: published
-          - color: var(--theme--foreground)
-            text: $t:draft
-            value: draft
-          - color: var(--theme--warning)
-            text: $t:archived
-            value: archived
+      options: null
       readonly: false
-      required: false
-      sort: 8
+      required: true
+      searchable: true
+      sort: 3
       special: null
       translations: null
       validation: null
       validation_message: null
-      width: half
+      width: full
     schema:
-      name: status
+      name: title
       table: exhibitions
       data_type: varchar
-      default_value: draft
+      default_value: null
       max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exhibitions
+    field: content
+    type: text
+    meta:
+      collection: exhibitions
+      conditions: null
+      display: null
+      display_options: null
+      field: content
+      group: null
+      hidden: false
+      interface: input-rich-text-html
+      note: null
+      options: null
+      readonly: false
+      required: true
+      searchable: true
+      sort: 6
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: content
+      table: exhibitions
+      data_type: text
+      default_value: null
+      max_length: null
       numeric_precision: null
       numeric_scale: null
       is_nullable: false
@@ -300,12 +547,13 @@ fields:
       options: null
       readonly: false
       required: false
-      sort: 9
+      searchable: true
+      sort: 7
       special: null
       translations: null
       validation: null
       validation_message: null
-      width: half
+      width: full
     schema:
       name: sort
       table: exhibitions
@@ -324,114 +572,30 @@ fields:
       foreign_key_table: null
       foreign_key_column: null
   - collection: exhibitions
-    field: date_created
-    type: timestamp
-    meta:
-      collection: exhibitions
-      conditions: null
-      display: datetime
-      display_options:
-        relative: true
-      field: date_created
-      group: null
-      hidden: true
-      interface: datetime
-      note: null
-      options: null
-      readonly: true
-      required: false
-      sort: 10
-      special:
-        - date-created
-        - cast-timestamp
-      translations: null
-      validation: null
-      validation_message: null
-      width: half
-    schema:
-      name: date_created
-      table: exhibitions
-      data_type: datetime
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: exhibitions
-    field: date_updated
-    type: timestamp
-    meta:
-      collection: exhibitions
-      conditions: null
-      display: datetime
-      display_options:
-        relative: true
-      field: date_updated
-      group: null
-      hidden: true
-      interface: datetime
-      note: null
-      options: null
-      readonly: true
-      required: false
-      sort: 11
-      special:
-        - date-updated
-        - cast-timestamp
-      translations: null
-      validation: null
-      validation_message: null
-      width: half
-    schema:
-      name: date_updated
-      table: exhibitions
-      data_type: datetime
-      default_value: null
-      max_length: null
-      numeric_precision: null
-      numeric_scale: null
-      is_nullable: true
-      is_unique: false
-      is_indexed: false
-      is_primary_key: false
-      is_generated: false
-      generation_expression: null
-      has_auto_increment: false
-      foreign_key_table: null
-      foreign_key_column: null
-  - collection: exhibitions
-    field: title
+    field: status
     type: string
     meta:
       collection: exhibitions
       conditions: null
       display: null
       display_options: null
-      field: title
+      field: status
       group: null
       hidden: false
       interface: input
       note: null
-      options:
-        iconLeft: subtitles
+      options: null
       readonly: false
-      required: true
-      sort: 1
+      required: false
+      searchable: true
+      sort: 8
       special: null
       translations: null
       validation: null
       validation_message: null
       width: full
     schema:
-      name: title
+      name: status
       table: exhibitions
       data_type: varchar
       default_value: null
@@ -463,12 +627,13 @@ fields:
       options: null
       readonly: false
       required: false
-      sort: 5
+      searchable: true
+      sort: 9
       special: null
       translations: null
       validation: null
       validation_message: null
-      width: half
+      width: full
     schema:
       name: start_date
       table: exhibitions
@@ -502,18 +667,139 @@ fields:
       options: null
       readonly: false
       required: false
-      sort: 6
+      searchable: true
+      sort: 10
       special: null
       translations: null
       validation: null
       validation_message: null
-      width: half
+      width: full
     schema:
       name: end_date
       table: exhibitions
       data_type: date
       default_value: null
       max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exhibitions
+    field: location
+    type: string
+    meta:
+      collection: exhibitions
+      conditions: null
+      display: null
+      display_options: null
+      field: location
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 11
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: location
+      table: exhibitions
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exhibitions
+    field: social_description
+    type: text
+    meta:
+      collection: exhibitions
+      conditions: null
+      display: null
+      display_options: null
+      field: social_description
+      group: null
+      hidden: false
+      interface: input-rich-text-html
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 12
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: social_description
+      table: exhibitions
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exhibitions
+    field: social_cover
+    type: string
+    meta:
+      collection: exhibitions
+      conditions: null
+      display: null
+      display_options: null
+      field: social_cover
+      group: null
+      hidden: false
+      interface: file-image
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 13
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: social_cover
+      table: exhibitions
+      data_type: char
+      default_value: null
+      max_length: 36
       numeric_precision: null
       numeric_scale: null
       is_nullable: true
@@ -538,10 +824,11 @@ fields:
       hidden: false
       interface: list-m2m
       note: null
-      options: {}
+      options: null
       readonly: false
       required: false
-      sort: 4
+      searchable: true
+      sort: 14
       special:
         - m2m
       translations: null
@@ -549,29 +836,55 @@ fields:
       validation_message: null
       width: full
   - collection: exhibitions
-    field: location
+    field: gallery
+    type: alias
+    meta:
+      collection: exhibitions
+      conditions: null
+      display: null
+      display_options: null
+      field: gallery
+      group: null
+      hidden: false
+      interface: files
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 15
+      special:
+        - m2m
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+  - collection: exhibitions
+    field: venue
     type: string
     meta:
       collection: exhibitions
       conditions: null
       display: null
       display_options: null
-      field: location
+      field: venue
       group: null
       hidden: false
       interface: input
-      note: null
-      options: null
+      note: Venue and city, e.g. "Castiglioni, Milan"
+      options:
+        placeholder: Venue, City
       readonly: false
       required: false
-      sort: 7
+      searchable: true
+      sort: 4
       special: null
       translations: null
       validation: null
       validation_message: null
-      width: full
+      width: half
     schema:
-      name: location
+      name: venue
       table: exhibitions
       data_type: varchar
       default_value: null
@@ -588,57 +901,34 @@ fields:
       foreign_key_table: null
       foreign_key_column: null
   - collection: exhibitions
-    field: content
-    type: text
+    field: year
+    type: integer
     meta:
       collection: exhibitions
       conditions: null
-      display: formatted-value
+      display: null
       display_options: null
-      field: content
+      field: year
       group: null
       hidden: false
-      interface: input-rich-text-html
-      note: null
+      interface: input
+      note: Exhibition year
       options:
-        toolbar:
-          - bold
-          - italic
-          - underline
-          - strikethrough
-          - subscript
-          - superscript
-          - h1
-          - h2
-          - h3
-          - h4
-          - alignleft
-          - aligncenter
-          - alignright
-          - alignjustify
-          - numlist
-          - bullist
-          - removeformat
-          - blockquote
-          - customLink
-          - customImage
-          - customMedia
-          - table
-          - hr
-          - code
-          - fullscreen
+        max: 2100
+        min: 2018
       readonly: false
-      required: true
-      sort: 3
+      required: false
+      searchable: true
+      sort: 5
       special: null
       translations: null
       validation: null
       validation_message: null
-      width: full
+      width: half
     schema:
-      name: content
+      name: year
       table: exhibitions
-      data_type: text
+      data_type: integer
       default_value: null
       max_length: null
       numeric_precision: null
@@ -663,11 +953,12 @@ fields:
       field: id
       group: null
       hidden: true
-      interface: null
+      interface: numeric
       note: null
       options: null
-      readonly: false
+      readonly: true
       required: false
+      searchable: true
       sort: 1
       special: null
       translations: null
@@ -707,6 +998,7 @@ fields:
       options: null
       readonly: false
       required: false
+      searchable: true
       sort: 2
       special: null
       translations: null
@@ -729,7 +1021,7 @@ fields:
       generation_expression: null
       has_auto_increment: false
       foreign_key_table: exhibitions
-      foreign_key_column: slug
+      foreign_key_column: id
   - collection: exhibitions_artists
     field: artists_id
     type: integer
@@ -746,6 +1038,7 @@ fields:
       options: null
       readonly: false
       required: false
+      searchable: true
       sort: 3
       special: null
       translations: null
@@ -769,6 +1062,366 @@ fields:
       has_auto_increment: false
       foreign_key_table: artists
       foreign_key_column: id
+  - collection: exhibitions_artists
+    field: exhibitions_id
+    type: integer
+    meta:
+      collection: exhibitions_artists
+      conditions: null
+      display: null
+      display_options: null
+      field: exhibitions_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: exhibitions_id
+      table: exhibitions_artists
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exhibitions_files
+    field: id
+    type: integer
+    meta:
+      collection: exhibitions_files
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: numeric
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: exhibitions_files
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exhibitions_files
+    field: exhibitions_slug
+    type: string
+    meta:
+      collection: exhibitions_files
+      conditions: null
+      display: null
+      display_options: null
+      field: exhibitions_slug
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: exhibitions_slug
+      table: exhibitions_files
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: exhibitions
+      foreign_key_column: id
+  - collection: exhibitions_files
+    field: directus_files_id
+    type: string
+    meta:
+      collection: exhibitions_files
+      conditions: null
+      display: null
+      display_options: null
+      field: directus_files_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: directus_files_id
+      table: exhibitions_files
+      data_type: char
+      default_value: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: directus_files
+      foreign_key_column: id
+  - collection: exhibitions_files
+    field: exhibitions_id
+    type: integer
+    meta:
+      collection: exhibitions_files
+      conditions: null
+      display: null
+      display_options: null
+      field: exhibitions_id
+      group: null
+      hidden: true
+      interface: null
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: exhibitions_id
+      table: exhibitions_files
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exit_images
+    field: id
+    type: integer
+    meta:
+      collection: exit_images
+      conditions: null
+      display: null
+      display_options: null
+      field: id
+      group: null
+      hidden: true
+      interface: numeric
+      note: null
+      options: null
+      readonly: true
+      required: false
+      searchable: true
+      sort: 1
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: id
+      table: exit_images
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: false
+      is_unique: false
+      is_indexed: false
+      is_primary_key: true
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: true
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exit_images
+    field: image
+    type: string
+    meta:
+      collection: exit_images
+      conditions: null
+      display: null
+      display_options: null
+      field: image
+      group: null
+      hidden: false
+      interface: file-image
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 2
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: image
+      table: exit_images
+      data_type: char
+      default_value: null
+      max_length: 36
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exit_images
+    field: description
+    type: text
+    meta:
+      collection: exit_images
+      conditions: null
+      display: null
+      display_options: null
+      field: description
+      group: null
+      hidden: false
+      interface: input-rich-text-html
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 3
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: description
+      table: exit_images
+      data_type: text
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: exit_images
+    field: sort
+    type: integer
+    meta:
+      collection: exit_images
+      conditions: null
+      display: null
+      display_options: null
+      field: sort
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: sort
+      table: exit_images
+      data_type: integer
+      default_value: null
+      max_length: null
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
   - collection: global
     field: id
     type: integer
@@ -780,11 +1433,12 @@ fields:
       field: id
       group: null
       hidden: true
-      interface: input
+      interface: numeric
       note: null
       options: null
       readonly: true
       required: false
+      searchable: true
       sort: 1
       special: null
       translations: null
@@ -824,6 +1478,7 @@ fields:
       options: null
       readonly: false
       required: false
+      searchable: true
       sort: 2
       special: null
       translations: null
@@ -853,49 +1508,17 @@ fields:
     meta:
       collection: global
       conditions: null
-      display: formatted-value
-      display_options:
-        bold: true
-        font: serif
-        format: true
-        italic: true
+      display: null
+      display_options: null
       field: about
       group: null
       hidden: false
       interface: input-rich-text-html
       note: null
-      options:
-        font: monospace
-        toolbar:
-          - bold
-          - italic
-          - underline
-          - strikethrough
-          - subscript
-          - superscript
-          - h1
-          - h2
-          - h3
-          - h4
-          - alignleft
-          - aligncenter
-          - alignright
-          - alignjustify
-          - alignnone
-          - indent
-          - outdent
-          - numlist
-          - bullist
-          - blockquote
-          - customLink
-          - customImage
-          - customMedia
-          - table
-          - hr
-          - code
-          - fullscreen
+      options: null
       readonly: false
       required: false
+      searchable: true
       sort: 3
       special: null
       translations: null
@@ -919,6 +1542,179 @@ fields:
       has_auto_increment: false
       foreign_key_table: null
       foreign_key_column: null
+  - collection: global
+    field: Footer_CTA_TEXT_1
+    type: string
+    meta:
+      collection: global
+      conditions: null
+      display: null
+      display_options: null
+      field: Footer_CTA_TEXT_1
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 4
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: Footer_CTA_TEXT_1
+      table: global
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: global
+    field: Footer_CTA_URL_1
+    type: string
+    meta:
+      collection: global
+      conditions: null
+      display: null
+      display_options: null
+      field: Footer_CTA_URL_1
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 5
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: Footer_CTA_URL_1
+      table: global
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: global
+    field: Footer_CTA_TEXT_2
+    type: string
+    meta:
+      collection: global
+      conditions: null
+      display: null
+      display_options: null
+      field: Footer_CTA_TEXT_2
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 6
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: Footer_CTA_TEXT_2
+      table: global
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+  - collection: global
+    field: Footer_CTA_URL_2
+    type: string
+    meta:
+      collection: global
+      conditions: null
+      display: null
+      display_options: null
+      field: Footer_CTA_URL_2
+      group: null
+      hidden: false
+      interface: input
+      note: null
+      options: null
+      readonly: false
+      required: false
+      searchable: true
+      sort: 7
+      special: null
+      translations: null
+      validation: null
+      validation_message: null
+      width: full
+    schema:
+      name: Footer_CTA_URL_2
+      table: global
+      data_type: varchar
+      default_value: null
+      max_length: 255
+      numeric_precision: null
+      numeric_scale: null
+      is_nullable: true
+      is_unique: false
+      is_indexed: false
+      is_primary_key: false
+      is_generated: false
+      generation_expression: null
+      has_auto_increment: false
+      foreign_key_table: null
+      foreign_key_column: null
+systemFields:
+  - collection: directus_activity
+    field: timestamp
+    schema:
+      is_indexed: true
+  - collection: directus_revisions
+    field: activity
+    schema:
+      is_indexed: true
+  - collection: directus_revisions
+    field: parent
+    schema:
+      is_indexed: true
 relations:
   - collection: exhibitions_artists
     field: artists_id
@@ -958,7 +1754,49 @@ relations:
       table: exhibitions_artists
       column: exhibitions_slug
       foreign_key_table: exhibitions
-      foreign_key_column: slug
+      foreign_key_column: id
+      constraint_name: null
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: exhibitions_files
+    field: directus_files_id
+    related_collection: directus_files
+    meta:
+      junction_field: exhibitions_slug
+      many_collection: exhibitions_files
+      many_field: directus_files_id
+      one_allowed_collections: null
+      one_collection: directus_files
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: null
+      sort_field: null
+    schema:
+      table: exhibitions_files
+      column: directus_files_id
+      foreign_key_table: directus_files
+      foreign_key_column: id
+      constraint_name: null
+      on_update: NO ACTION
+      on_delete: SET NULL
+  - collection: exhibitions_files
+    field: exhibitions_slug
+    related_collection: exhibitions
+    meta:
+      junction_field: directus_files_id
+      many_collection: exhibitions_files
+      many_field: exhibitions_slug
+      one_allowed_collections: null
+      one_collection: exhibitions
+      one_collection_field: null
+      one_deselect_action: nullify
+      one_field: gallery
+      sort_field: null
+    schema:
+      table: exhibitions_files
+      column: exhibitions_slug
+      foreign_key_table: exhibitions
+      foreign_key_column: id
       constraint_name: null
       on_update: NO ACTION
       on_delete: SET NULL

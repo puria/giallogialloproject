@@ -1,0 +1,31 @@
+version: "3"
+
+tasks:
+  install:
+    cmds:
+      - bun install
+
+  fmt:
+    cmds:
+      - bunx prettier --write src astro.config.mjs
+
+  lint:
+    cmds:
+      - bunx prettier --check src astro.config.mjs
+      - task: lint:design
+
+  lint:design:
+    cmds:
+      - if [ -f .puria/design/DESIGN.md ]; then npx --yes @google/design.md lint .puria/design/DESIGN.md; fi
+
+  test:
+    cmds:
+      - bun test src
+
+  run:
+    cmds:
+      - bun run dev
+
+  build:
+    cmds:
+      - bun run build

@@ -1,11 +1,3 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import directus from "@/lib/directus";
-import { readSingleton } from "@directus/sdk";
-
-const global = await directus.request(readSingleton("global"));
+return Astro.redirect("/");
 ---
-
-<Layout title="About">
-  <div class="mx-auto text-justify prose pt-16" set:html={global.about} />
-</Layout>
