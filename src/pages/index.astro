@@ -8,7 +8,7 @@ const global = await directus.request(readSingleton("global"));
 
 <Layout title="About" label="About">
   <div
-    class="prose-ggp prose-p:my-6 mt-4 text-xl leading-[1.55]"
+    class="prose-ggp prose-p:my-6 leading text-justify-[1.55] mt-4 text-xl"
     set:html={global.about}
   />
 </Layout>
