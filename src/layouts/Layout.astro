@@ -60,8 +60,10 @@ const year = new Date().getFullYear();
   </head>
 
   <body class="mx-auto flex min-h-screen max-w-3xl flex-col px-[26px] md:px-10">
-    <header class="flex items-center justify-between gap-4 pt-10 text-[19px]">
-      <a href="/" class="border-main border p-2 font-bold">{global.title}</a>
+    <header class="header-type flex items-center justify-between gap-4 pt-10">
+      <a href="/" class="border-main border p-2 font-bold whitespace-nowrap"
+        >{global.title}</a
+      >
       <button
         type="button"
         class="cursor-pointer whitespace-nowrap"
@@ -244,8 +246,9 @@ const year = new Date().getFullYear();
       <div
         class="mx-auto flex min-h-full max-w-3xl flex-col px-[26px] md:px-10"
       >
-        <div class="flex items-center justify-between gap-4 pt-10 text-[19px]">
-          <a href="/" class="border-main border p-2 font-bold">{global.title}</a
+        <div class="header-type flex items-center justify-between gap-4 pt-10">
+          <a href="/" class="border-main border p-2 font-bold whitespace-nowrap"
+            >{global.title}</a
           >
           <button
             type="button"
