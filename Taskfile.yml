@@ -12,11 +12,6 @@ tasks:
   lint:
     cmds:
       - bunx prettier --check src astro.config.mjs
-      - task: lint:design
-
-  lint:design:
-    cmds:
-      - if [ -f .puria/design/DESIGN.md ]; then npx --yes @google/design.md lint .puria/design/DESIGN.md; fi
 
   test:
     cmds:

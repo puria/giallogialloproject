@@ -267,7 +267,7 @@ go = "1.26.2"
 task = "latest"
 ```
 
-If `task lint:design` cannot run because `task` is not installed:
+If `task lint` cannot run because `task` is not installed:
 
 → mise is not being used yet
 
@@ -291,11 +291,7 @@ tasks:
 
   lint:
     cmds:
-      - task lint:design
-
-  lint:design:
-    cmds:
-      - if [ -f .puria/design/DESIGN.md ]; then npx --yes @google/design.md lint .puria/design/DESIGN.md; fi
+      - go vet ./...
 
   run:
     cmds:
@@ -305,64 +301,6 @@ tasks:
     cmds:
       - go build -o bin/starter .
 ```
-
----
-
-## Design Source
-
-All Puria design MUST be neubrutalist.
-
-If a task includes any web UI:
-
-→ follow `https://neubrutalism.com` as the design reference
-
-If a task includes TUI design:
-
-→ apply neubrutalist principles to the terminal interface
-
-Required neubrutalist traits:
-
-- thick, explicit borders
-- hard offset shadows where the medium supports them
-- square or near-square corners
-- flat high-contrast color
-- bold typography
-- visible structure
-- clear hierarchy
-- no gradients
-- no soft, blurred, polished-neutral styling
-
-If the project uses Svelte:
-
-→ prefer existing neobrutalist Svelte components when they fit the task
-
-If existing components do not fit:
-
-→ implement custom components that follow the same neubrutalist design rules
-
-`.puria/design/DESIGN.md` defines the mandatory Puria neubrutalist design system.
-
-Agents MUST read `.puria/design/DESIGN.md` before any task that affects web UI, TUI, visual identity, layout, components, typography, colors, or design-bearing documentation.
-
-If `.puria/design/DESIGN.md` is present:
-
-→ it is the source of truth for design
-
-→ agents MUST follow it
-
-→ `mise.toml` MUST include `node = "latest"`
-
-→ agents MUST validate it through `task lint`
-
-→ `task lint` MUST run `task lint:design`
-
-→ `task lint:design` MUST run `npx --yes @google/design.md lint .puria/design/DESIGN.md`
-
-If `.puria/design/DESIGN.md` is absent:
-
-→ do not infer a design system
-
-→ do not create one unless explicitly requested
 
 ---
 
