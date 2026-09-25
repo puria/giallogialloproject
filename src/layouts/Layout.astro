@@ -60,7 +60,7 @@ const year = new Date().getFullYear();
   </head>
 
   <body class="mx-auto flex min-h-screen max-w-3xl flex-col px-[26px] md:px-10">
-    <header class="flex items-baseline justify-between pt-10 text-[15px]">
+    <header class="flex items-baseline justify-between pt-10 text-[17px]">
       <a href="/" class="font-bold">{global.title}</a>
       <button
         type="button"
@@ -79,7 +79,7 @@ const year = new Date().getFullYear();
     </main>
 
     <footer class="pt-40 pb-10">
-      <nav class="flex gap-6 text-[15px]">
+      <nav class="flex gap-6 text-[17px]">
         <a href={global.Footer_CTA_URL_1} target="_blank" rel="noopener">
           {global.Footer_CTA_TEXT_1}
         </a>
@@ -88,7 +88,7 @@ const year = new Date().getFullYear();
         >
       </nav>
 
-      <p class="mt-6 text-[11px] text-gray-600">
+      <p class="mt-6 text-[13px] text-gray-600">
         &copy; 2018-{year}
         {global.title}. All rights reserved.
       </p>
@@ -237,7 +237,7 @@ const year = new Date().getFullYear();
       <div
         class="mx-auto flex min-h-full max-w-3xl flex-col px-[26px] md:px-10"
       >
-        <div class="flex items-baseline justify-between pt-10 text-[15px]">
+        <div class="flex items-baseline justify-between pt-10 text-[17px]">
           <a href="/" class="font-bold">{global.title}</a>
           <button type="button" class="cursor-pointer" data-menu-close>
             Close ←
@@ -245,7 +245,7 @@ const year = new Date().getFullYear();
         </div>
         <nav class="flex-grow pt-12">
           <p class="label">( Menu )</p>
-          <ul class="mt-6 flex flex-col gap-8 text-3xl leading-tight">
+          <ul class="mt-6 flex flex-col gap-8 text-4xl leading-tight">
             {
               menu.map((item) => (
                 <li>
@@ -266,7 +266,7 @@ const year = new Date().getFullYear();
             }
           </ul>
         </nav>
-        <nav class="flex gap-6 border-t border-current pt-5 pb-10 text-[15px]">
+        <nav class="flex gap-6 border-t border-current pt-5 pb-10 text-[17px]">
           <a href={global.Footer_CTA_URL_1} target="_blank" rel="noopener">
             {global.Footer_CTA_TEXT_1}
           </a>
