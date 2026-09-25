@@ -1,0 +1,26 @@
+version: "3"
+
+tasks:
+  install:
+    cmds:
+      - bun install
+
+  fmt:
+    cmds:
+      - bunx prettier --write src astro.config.mjs
+
+  lint:
+    cmds:
+      - bunx prettier --check src astro.config.mjs
+
+  test:
+    cmds:
+      - bun test src
+
+  run:
+    cmds:
+      - bun run dev
+
+  build:
+    cmds:
+      - bun run build

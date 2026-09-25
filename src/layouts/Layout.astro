@@ -1,17 +1,37 @@
 ---
 import directus, { directusUrl } from "@/lib/directus";
 import "@/styles/global.css";
-import { readItems, readSingleton } from "@directus/sdk";
+import { readSingleton } from "@directus/sdk";
 import "@fontsource/courier-prime";
+import "@fontsource/courier-prime/700.css";
+import "@fontsource/courier-prime/400-italic.css";
 import { SEO } from "astro-seo";
 
-const exhibitions = await directus.request(
-  readItems("exhibitions", { fields: ["slug"] }),
-);
+type Props = {
+  title: string;
+  label: string;
+  description?: string;
+  social_cover?: string;
+};
+
 const global = await directus.request(readSingleton("global"));
 
-const { title, description = "", social_cover = "" } = Astro.props;
-const path = Astro.url.pathname.split("/");
+const { title, label, description = "", social_cover = "" } = Astro.props;
+const path = Astro.url.pathname;
+const menu = [
+  { href: "/projects", text: "Projects", active: path.includes("/project") },
+  {
+    href: "/exit",
+    text: "Exit Through the Gift Shop",
+    active: path.startsWith("/exit"),
+  },
+  {
+    href: "/",
+    text: "About",
+    active: path === "/" || path.startsWith("/about"),
+  },
+];
+const year = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -39,229 +59,188 @@ const path = Astro.url.pathname.split("/");
     <link rel="sitemap" href="/sitemap-index.xml" />
   </head>
 
-  <body class="mx-auto flex min-h-screen max-w-3xl flex-col gap-8 p-10">
-    <a href="/" class="text-3xl whitespace-nowrap">{global.title}</a>
-    <nav
-      class="mx-auto flex w-full flex-col-reverse justify-between gap-3 md:flex-row md:items-center md:gap-12"
-    >
-      <div class="flex flex-col-reverse gap-3 md:flex-row md:gap-12">
-        <a href="/projects" class:list={[{ active: path.includes("project") }]}
-          >Projects</a
-        >
-        <a href="/exit" class:list={[{ active: path.includes("exit") }]}>
-          Exit Through the Gift Shop
-        </a>
-      </div>
-      <a href="/about" class:list={[{ active: path.includes("about") }]}>
-        About
-      </a>
-    </nav>
-    <nav class:list={[{ hidden: !path.includes("project") }]}>
-      <ul class="flex gap-3">
-        {
-          exhibitions.map((exhibition) => (
-            <li>
-              <a
-                href={`/project/${exhibition.slug}`}
-                class:list={[{ active: path.includes(exhibition.slug) }]}
-              >
-                {exhibition.slug}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
-    <main class="flex-grow">
+  <body class="mx-auto flex min-h-screen max-w-3xl flex-col px-[26px] md:px-10">
+    <header class="flex items-baseline justify-between pt-10 text-[15px]">
+      <a href="/" class="font-bold">{global.title}</a>
+      <button
+        type="button"
+        class="cursor-pointer"
+        aria-controls="menu"
+        aria-expanded="false"
+        data-menu-open
+      >
+        Menu +
+      </button>
+    </header>
+
+    <main class="flex-grow pt-12">
+      <p class="label">( {label} )</p>
       <slot />
     </main>
-    <div
-      class:list={["relative z-10", { hidden: true }]}
-      aria-labelledby="modal-title"
-      role="dialog"
-      aria-modal="true"
-      id="nl"
-    >
-      <!--
-        Background backdrop, show/hide based on modal state.
 
-        Entering: "ease-out duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-        Leaving: "ease-in duration-200"
-        From: "opacity-100"
-        To: "opacity-0"
-      -->
-      <div
-        class="fixed inset-0 bg-gray-500/75 transition-opacity"
-        aria-hidden="true"
+    <footer class="pt-40 pb-10">
+      <form
+        id="newsletter-form"
+        data-directus-url={directusUrl}
+        class="border-t border-current"
       >
-      </div>
-
-      <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
-        <div
-          class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"
-        >
-          <!--
-            Modal panel, show/hide based on modal state.
-
-            Entering: "ease-out duration-300"
-            From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            To: "opacity-100 translate-y-0 sm:scale-100"
-            Leaving: "ease-in duration-200"
-            From: "opacity-100 translate-y-0 sm:scale-100"
-            To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-          -->
-          <div
-            class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
+        <label for="nl-name" class="sr-only">Name</label>
+        <input
+          id="nl-name"
+          name="name"
+          type="text"
+          autocomplete="given-name"
+          placeholder="Name"
+          class="block w-full border-b border-current bg-transparent py-4 outline-none placeholder:text-gray-400"
+        />
+        <div class="flex items-center border-b border-current">
+          <label for="nl-email" class="sr-only">Email</label>
+          <input
+            id="nl-email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            placeholder="Email"
+            required
+            class="block w-full bg-transparent py-4 outline-none placeholder:text-gray-400"
+          />
+          <button
+            id="nl-submit"
+            type="submit"
+            class="hover:text-main cursor-pointer whitespace-nowrap"
           >
-            <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-              <div class="sm:flex sm:items-start">
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                  <h3
-                    class="text-base font-semibold text-gray-900"
-                    id="modal-title"
-                  >
-                    Newsletter
-                  </h3>
-                  <div class="mt-2">
-                    <p class="text-sm text-gray-600">
-                      Subscribe to receive updates on upcoming events and news.
-                      No spam, just art.
-                      <a
-                        href="/privacy_policy"
-                        target="_blank"
-                        class="text-main underline">Privacy Policy</a
-                      >
-                    </p>
-                    <form id="newsletter-form" data-directus-url={directusUrl}>
-                      <div class="space-y-12">
-                        <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-8">
-                          <!-- First Name Field -->
-                          <div class="mt-2">
-                            <label
-                              for="name"
-                              class="block text-sm font-medium text-gray-900"
-                            >
-                              Name
-                            </label>
-                            <input
-                              type="text"
-                              name="name"
-                              id="name"
-                              autocomplete="given-name"
-                              class="focus:outline-main block w-full bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 sm:text-sm"
-                            />
-                          </div>
-
-                          <!-- Email Field -->
-                          <div class="mt-2">
-                            <label
-                              for="email"
-                              class="block text-sm font-medium text-gray-900"
-                            >
-                              Email Address
-                            </label>
-                            <input
-                              id="email"
-                              name="email"
-                              type="email"
-                              autocomplete="email"
-                              required
-                              class="focus:outline-main block w-full px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 sm:text-sm"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <p class="hidden bg-gray-50 px-4 py-3" id="subscribed">
-                        🥳 Hooray we will keep you updated!
-                      </p>
-                      <p class="hidden bg-red-50 px-4 py-3 text-sm" id="errors">
-                        Subscription failed. Please try again.
-                      </p>
-                      <div
-                        id="actions"
-                        class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6"
-                      >
-                        <button
-                          id="submit"
-                          type="submit"
-                          class="bg-main inline-flex w-full cursor-pointer justify-center px-3 py-2 text-sm font-semibold text-white shadow-xs hover:text-black sm:ml-3 sm:w-auto"
-                        >
-                          Subscribe
-                        </button>
-                        <button
-                          id="cancel"
-                          type="button"
-                          class="mt-3 inline-flex w-full justify-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 hover:ring-red-500 sm:mt-0 sm:w-auto"
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+            Subscribe →
+          </button>
         </div>
-      </div>
-    </div>
-
-    <footer class="relative p-7 pb-40">
-      <div class="footer-buttons flex gap-4">
-        <a
-          href={global.Footer_CTA_URL_1}
-          aria-label={global.Footer_CTA_TEXT_1}
-          target="_blank"
-          class="border-main border p-2"
+        <p
+          class="mt-5 text-[13px] text-gray-600"
+          id="nl-status"
+          aria-live="polite"
         >
+          No spam, just art. <a href="/privacy_policy" class="link-main"
+            >Privacy Policy</a
+          >
+        </p>
+      </form>
+
+      <nav class="mt-8 flex gap-6 text-[15px]">
+        <a href={global.Footer_CTA_URL_1} target="_blank" rel="noopener">
           {global.Footer_CTA_TEXT_1}
         </a>
-        <a
-          id="fomo"
-          href={global.Footer_CTA_URL_2}
-          aria-label={global.Footer_CTA_TEXT_2}
-          class="border-main border p-2"
+        <a href={global.Footer_CTA_URL_2} data-fomo
+          >{global.Footer_CTA_TEXT_2}</a
         >
-          {global.Footer_CTA_TEXT_2}
-        </a>
-      </div>
+      </nav>
 
-      <p class="mt-8">
-        &copy; 2018-2025 Giallo Giallo Project. All rights reserved.
+      <p class="mt-6 text-[11px] text-gray-600">
+        &copy; 2018-{year}
+        {global.title}. All rights reserved.
       </p>
     </footer>
+
+    <div
+      id="menu"
+      class="fixed inset-0 z-20 hidden overflow-y-auto bg-white"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Menu"
+    >
+      <div
+        class="mx-auto flex min-h-full max-w-3xl flex-col px-[26px] md:px-10"
+      >
+        <div class="flex items-baseline justify-between pt-10 text-[15px]">
+          <a href="/" class="font-bold">{global.title}</a>
+          <button type="button" class="cursor-pointer" data-menu-close>
+            Close ←
+          </button>
+        </div>
+        <nav class="flex-grow pt-12">
+          <p class="label">( Menu )</p>
+          <ul class="mt-6 flex flex-col gap-8 text-3xl leading-tight">
+            {
+              menu.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    aria-current={item.active ? "page" : undefined}
+                    class:list={[
+                      "block border-b-[3px]",
+                      item.active
+                        ? "border-main"
+                        : "hover:border-main border-transparent",
+                    ]}
+                  >
+                    {item.text}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+        <nav class="flex gap-6 border-t border-current pt-5 pb-10 text-[15px]">
+          <a href={global.Footer_CTA_URL_1} target="_blank" rel="noopener">
+            {global.Footer_CTA_TEXT_1}
+          </a>
+          <a href={global.Footer_CTA_URL_2} data-fomo
+            >{global.Footer_CTA_TEXT_2}</a
+          >
+        </nav>
+      </div>
+    </div>
   </body>
 </html>
 
 <script>
-  const cancel = document.getElementById("cancel");
-  cancel?.addEventListener("click", (e) => {
-    document.getElementById("nl")?.classList.toggle("hidden");
-    e.preventDefault();
+  import { createDirectus, createItem, rest } from "@directus/sdk";
+
+  console.log(
+    "%c Giallo Giallo Project %c no spam, just art ",
+    "background:rgb(250,183,0);color:#000;font:bold 14px 'Courier Prime',monospace;padding:4px 8px",
+    "background:#fff;color:#000;font:14px 'Courier Prime',monospace;padding:4px 8px",
+  );
+
+  const menu = document.getElementById("menu");
+  const openButton =
+    document.querySelector<HTMLButtonElement>("[data-menu-open]");
+
+  function setMenu(open: boolean) {
+    menu?.classList.toggle("hidden", !open);
+    document.documentElement.classList.toggle("overflow-hidden", open);
+    openButton?.setAttribute("aria-expanded", String(open));
+  }
+
+  openButton?.addEventListener("click", () => setMenu(true));
+  document
+    .querySelector("[data-menu-close]")
+    ?.addEventListener("click", () => setMenu(false));
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") setMenu(false);
   });
 
-  const fomo = document.getElementById("fomo");
-  fomo?.addEventListener("click", (e) => {
-    document.getElementById("nl")?.classList.toggle("hidden");
-    e.preventDefault();
-  });
+  const form = document.querySelector<HTMLFormElement>("#newsletter-form");
+  const nameInput = document.querySelector<HTMLInputElement>("#nl-name");
 
-  import { createItem, createDirectus, rest } from "@directus/sdk";
-  const form = document.querySelector("#newsletter-form");
+  document.querySelectorAll("[data-fomo]").forEach((fomo) =>
+    fomo.addEventListener("click", (e) => {
+      e.preventDefault();
+      setMenu(false);
+      form?.scrollIntoView({ behavior: "smooth", block: "center" });
+      nameInput?.focus({ preventScroll: true });
+    }),
+  );
+
   const directusUrl = form?.dataset.directusUrl;
   const directus = directusUrl
     ? createDirectus(directusUrl).with(rest())
     : null;
+  const status = document.getElementById("nl-status");
+  const submit = document.querySelector<HTMLButtonElement>("#nl-submit");
+
   form?.addEventListener("submit", async (event) => {
     event.preventDefault();
-    if (!directus) return;
+    if (!directus || !status || !submit) return;
     const formData = new FormData(form);
-    const actions = document.getElementById("actions");
-    const subscribed = document.getElementById("subscribed");
-    const errors = document.getElementById("errors");
-    errors?.classList.add("hidden");
+    submit.disabled = true;
     try {
       await directus.request(
         createItem("contacts", {
@@ -269,14 +248,14 @@ const path = Astro.url.pathname.split("/");
           email: formData.get("email"),
         }),
       );
-      actions?.classList.add("!hidden");
-      subscribed?.classList.remove("hidden");
+      form.reset();
+      status.textContent = "Hooray, we will keep you updated!";
+      status.classList.replace("text-gray-600", "text-black");
     } catch (error) {
-      errors?.classList.remove("hidden");
-      console.error("Newsletter subscription failed", {
-        directusUrl,
-        error,
-      });
+      status.textContent = "Subscription failed. Please try again.";
+      console.error("Newsletter subscription failed", { directusUrl, error });
+    } finally {
+      submit.disabled = false;
     }
   });
 </script>

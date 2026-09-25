@@ -1,12 +1,14 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import directus, { directusUrl } from "@/lib/directus";
+import { formatVenueYear } from "@/lib/exhibitions";
 import { readItems } from "@directus/sdk";
 
 export async function getStaticPaths() {
   const exhibitions = await directus.request(
     readItems("exhibitions", {
       fields: ["*,gallery.*", { relation: ["*"] }],
+      limit: -1,
     }),
   );
   return exhibitions.map((e) => ({ params: { slug: e.slug }, props: e }));
@@ -16,25 +18,32 @@ const e = Astro.props;
 
 <Layout
   title={e.title}
+  label={`Project ${e.slug}`}
   description={e.social_description}
   social_cover={e.social_cover}
 >
-  <main>
-    <h1 class="pb-6 text-center text-3xl">Project {e.slug}</h1>
-    <div class="prose mx-auto" set:html={e.content} />
-    <div class="grid-col-1 grid gap-4 p-8">
-      {
-        e.gallery &&
-          e.gallery.map((i: { directus_files_id: string }, x: number) => (
-            <img
-              src={`${directusUrl}/assets/${i.directus_files_id}?key=ex`}
-              alt={`Artwork #${x + 1} of ${e.title}`}
-              class="border-main border"
-              loading="lazy"
-              decoding="async"
-            />
-          ))
-      }
-    </div>
-  </main>
+  <a
+    href="/projects"
+    class="mt-4 block text-[13px] text-gray-600 hover:text-black"
+  >
+    ← All projects
+  </a>
+  <h1 class="mt-4 border-t border-current pt-4 text-2xl italic">
+    {e.title.trim()}
+  </h1>
+  <p class="mt-1 text-[13px] text-gray-600">{formatVenueYear(e)}</p>
+  <div class="prose-ggp mt-8 text-justify" set:html={e.content} />
+  <div class="mt-8 grid grid-cols-1 gap-4">
+    {
+      e.gallery &&
+        e.gallery.map((i: { directus_files_id: string }, x: number) => (
+          <img
+            src={`${directusUrl}/assets/${i.directus_files_id}?key=ex`}
+            alt={`Artwork #${x + 1} of ${e.title}`}
+            loading="lazy"
+            decoding="async"
+          />
+        ))
+    }
+  </div>
 </Layout>
