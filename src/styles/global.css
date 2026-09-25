@@ -19,12 +19,12 @@
     height: 100%;
   }
   .label {
-    @apply text-[13px] tracking-[0.15em] text-gray-600 uppercase;
+    @apply text-[15px] tracking-[0.15em] text-gray-600 uppercase;
   }
   .link-main {
     @apply decoration-main underline decoration-2 underline-offset-4;
   }
   .prose-ggp {
-    @apply prose prose-lg max-w-none;
+    @apply prose prose-xl max-w-none;
   }
 }
