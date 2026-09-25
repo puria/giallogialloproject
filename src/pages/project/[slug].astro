@@ -32,7 +32,7 @@ const e = Astro.props;
     {e.title.trim()}
   </h1>
   <p class="mt-1 text-[13px] text-gray-600">{formatVenueYear(e)}</p>
-  <div class="prose-ggp mt-8" set:html={e.content} />
+  <div class="prose-ggp mt-8 text-justify" set:html={e.content} />
   <div class="mt-8 grid grid-cols-1 gap-4">
     {
       e.gallery &&
